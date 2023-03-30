@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
@@ -14,8 +13,16 @@ import com.bumptech.glide.request.RequestOptions
 
 class UserAdapter(private val listUser: List<User>) :RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: User)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val context = view
         val tvUserName: TextView = view.findViewById(R.id.tv_user_name)
         val imgUserAvatar: ImageView = view.findViewById(R.id.img_user_avatar)
     }
@@ -41,8 +48,9 @@ class UserAdapter(private val listUser: List<User>) :RecyclerView.Adapter<UserAd
         holder.tvUserName.text = name
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "Kamu memilih $name", Toast.LENGTH_SHORT).show()
+            holder.itemView.setOnClickListener {
+                onItemClickCallback.onItemClicked(listUser[holder.adapterPosition])
+            }
         }
-//        TODO("Implement move to user detail fragment")
     }
 }
