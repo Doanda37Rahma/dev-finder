@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,20 +32,6 @@ class MainActivity : AppCompatActivity() {
         binding.rvUsers.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUsers.addItemDecoration(itemDecoration)
-
-//        val listUsersDemo = listOf<User>(
-//            User("https://avatars.githubusercontent.com/u/69817149?v=4", "doanda"),
-//            User("https://avatars.githubusercontent.com/u/69817149?v=4", "doanda"),
-//            User("https://avatars.githubusercontent.com/u/69817149?v=4", "doanda"),
-//            User("https://avatars.githubusercontent.com/u/69817149?v=4", "doanda"),
-//            User("https://avatars.githubusercontent.com/u/69817149?v=4", "doanda"),
-//            User("https://avatars.githubusercontent.com/u/69817149?v=4", "doanda"),
-//            User("https://avatars.githubusercontent.com/u/69817149?v=4", "doanda"),
-//        )
-//        val adapter = UserAdapter(listUsersDemo)
-//        binding.rvUsers.adapter = adapter
-
-        findUsers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,8 +45,7 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-//                TODO("Connect to API")
-                Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
+                findUsers(query)
                 searchView.clearFocus()
                 return true
             }
@@ -84,10 +68,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun findUsers() {
+    private fun findUsers(query: String?) {
         showLoading(true)
-//        TODO("Implement Search Feature")
-        val client = ApiConfig.getApiService().searchUsers("doanda")
+        val userQuery = query ?: getString(R.string.default_username)
+        val client = ApiConfig.getApiService().searchUsers(userQuery)
         client.enqueue(object: Callback<GithubSearchResponse>{
             override fun onResponse(
                 call: Call<GithubSearchResponse>,
