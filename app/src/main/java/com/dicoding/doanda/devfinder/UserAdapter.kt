@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
@@ -32,11 +33,16 @@ class UserAdapter(private val listUser: List<User>) :RecyclerView.Adapter<UserAd
 //        holder.imgUserAvatar.setImageResource(avatar)
         var requestOptions = RequestOptions()
         requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
-        Glide.with(holder.context)
+        Glide.with(holder.itemView.context)
             .load(avatar)
             .apply(requestOptions)
             .skipMemoryCache(true)
             .into(holder.imgUserAvatar)
         holder.tvUserName.text = name
+
+        holder.itemView.setOnClickListener {
+            Toast.makeText(holder.itemView.context, "Kamu memilih $name", Toast.LENGTH_SHORT).show()
+        }
+//        TODO("Implement move to user detail fragment")
     }
 }
