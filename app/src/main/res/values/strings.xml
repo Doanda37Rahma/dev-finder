@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Dev Finder</string>
     <string name="user_name">userName</string>
+    <string name="default_avatar_url">https://avatars.githubusercontent.com/u/69817149?v=4</string>
+    <string name="default_username">user name</string>
+
 </resources>
