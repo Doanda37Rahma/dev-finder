@@ -3,5 +3,6 @@
     <string name="user_name">userName</string>
     <string name="default_avatar_url">https://avatars.githubusercontent.com/u/69817149?v=4</string>
     <string name="default_username">user name</string>
-
+<string name="search">Search</string>
+    <string name="search_hint">Masukkan Username Github</string>
 </resources>
