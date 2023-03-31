@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -113,11 +112,6 @@ class MainActivity : AppCompatActivity() {
         binding.rvUsers.adapter = adapter
         adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "MainActivity : ${data.name}",
-                    Toast.LENGTH_SHORT
-                ).show()
                 val intent = Intent(this@MainActivity, UserDetailActivity::class.java)
                 intent.putExtra(UserDetailActivity.EXTRA_USER, data)
                 startActivity(intent)
