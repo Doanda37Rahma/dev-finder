@@ -1,12 +1,13 @@
-package com.dicoding.doanda.devfinder
+package com.dicoding.doanda.devfinder.models
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.doanda.devfinder.api.ApiConfig
-import com.dicoding.doanda.devfinder.api.GithubUserResponse
-import com.dicoding.doanda.devfinder.user.User
+import com.dicoding.doanda.devfinder.activities.UserDetailActivity
+import com.dicoding.doanda.devfinder.network.ApiConfig
+import com.dicoding.doanda.devfinder.network.GithubUserResponse
+import com.dicoding.doanda.devfinder.user.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,8 +17,8 @@ class UserDetailViewModel(private val userName: String): ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _userDetail = MutableLiveData<User>()
-    val userDetail: LiveData<User> = _userDetail
+    private val _userDetail = MutableLiveData<UserModel>()
+    val userDetail: LiveData<UserModel> = _userDetail
 
     init {
         findUserDetail()
@@ -36,7 +37,7 @@ class UserDetailViewModel(private val userName: String): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
 
-                        val user = User(
+                        val user = UserModel(
                             avatar = responseBody.avatarUrl,
                             username = responseBody.login,
                             name = responseBody.name,

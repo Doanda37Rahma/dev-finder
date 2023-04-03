@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder
+package com.dicoding.doanda.devfinder.activities
 
 import android.os.Build
 import android.os.Bundle
@@ -11,8 +11,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.dicoding.doanda.devfinder.R
+import com.dicoding.doanda.devfinder.adapters.SectionsPagerAdapter
 import com.dicoding.doanda.devfinder.databinding.ActivityUserDetailBinding
-import com.dicoding.doanda.devfinder.user.User
+import com.dicoding.doanda.devfinder.models.UserDetailViewModel
+import com.dicoding.doanda.devfinder.models.UserDetailViewModelFactory
+import com.dicoding.doanda.devfinder.user.UserModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -40,10 +44,10 @@ class UserDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val user = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra<User>(EXTRA_USER, User::class.java)
+            intent.getParcelableExtra<UserModel>(EXTRA_USER, UserModel::class.java)
         } else {
             @Suppress("DEPRECATION")
-            intent.getParcelableExtra<User>(EXTRA_USER)
+            intent.getParcelableExtra<UserModel>(EXTRA_USER)
         }
 
         if (user != null) {
@@ -64,7 +68,7 @@ class UserDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUserDetailData(user: User) {
+    private fun setUserDetailData(user: UserModel) {
         var requestOptions = RequestOptions()
         requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(50))
         Glide.with(this@UserDetailActivity)

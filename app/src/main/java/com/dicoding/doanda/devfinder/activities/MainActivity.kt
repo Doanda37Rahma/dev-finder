@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder
+package com.dicoding.doanda.devfinder.activities
 
 import android.app.SearchManager
 import android.content.Context
@@ -11,10 +11,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.doanda.devfinder.api.ItemsItem
+import com.dicoding.doanda.devfinder.R
+import com.dicoding.doanda.devfinder.network.ItemsItem
 import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
-import com.dicoding.doanda.devfinder.user.User
-import com.dicoding.doanda.devfinder.user.UserAdapter
+import com.dicoding.doanda.devfinder.models.MainViewModel
+import com.dicoding.doanda.devfinder.user.UserModel
+import com.dicoding.doanda.devfinder.user.UserModelAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,20 +82,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUserListData(items: List<ItemsItem?>?) {
-        val listUsers = ArrayList<User>()
+        val listUsers = ArrayList<UserModel>()
         if (items != null) {
             for (item in items) {
                 val avatar = item?.avatarUrl ?: getString(R.string.default_avatar_url)
                 val name = item?.login ?: getString(R.string.default_username)
-                val user = User(avatar = avatar, username = name, null, null, null)
+                val user = UserModel(avatar = avatar, username = name, null, null, null)
                 listUsers.add(user)
             }
         }
 
-        val adapter = UserAdapter(listUsers)
+        val adapter = UserModelAdapter(listUsers)
         binding.rvUsers.adapter = adapter
-        adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: User) {
+        adapter.setOnItemClickCallback(object : UserModelAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: UserModel) {
                 val intent = Intent(this@MainActivity, UserDetailActivity::class.java)
                 intent.putExtra(UserDetailActivity.EXTRA_USER, data)
                 startActivity(intent)

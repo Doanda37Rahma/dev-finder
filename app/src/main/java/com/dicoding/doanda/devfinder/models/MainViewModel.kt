@@ -1,12 +1,12 @@
-package com.dicoding.doanda.devfinder
+package com.dicoding.doanda.devfinder.models
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.doanda.devfinder.api.ApiConfig
-import com.dicoding.doanda.devfinder.api.GithubSearchResponse
-import com.dicoding.doanda.devfinder.api.ItemsItem
+import com.dicoding.doanda.devfinder.network.ApiConfig
+import com.dicoding.doanda.devfinder.network.GithubSearchResponse
+import com.dicoding.doanda.devfinder.network.ItemsItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

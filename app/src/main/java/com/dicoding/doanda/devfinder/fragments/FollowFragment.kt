@@ -1,23 +1,24 @@
-package com.dicoding.doanda.devfinder
+package com.dicoding.doanda.devfinder.fragments
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.doanda.devfinder.api.ApiConfig
-import com.dicoding.doanda.devfinder.api.ItemsItem
+import com.dicoding.doanda.devfinder.R
+import com.dicoding.doanda.devfinder.activities.UserDetailActivity
 import com.dicoding.doanda.devfinder.databinding.FragmentFollowBinding
-import com.dicoding.doanda.devfinder.user.User
-import com.dicoding.doanda.devfinder.user.UserAdapter
+import com.dicoding.doanda.devfinder.network.ApiConfig
+import com.dicoding.doanda.devfinder.network.ItemsItem
+import com.dicoding.doanda.devfinder.user.UserModel
+import com.dicoding.doanda.devfinder.user.UserModelAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class FollowFragment : Fragment() {
 
@@ -120,20 +121,20 @@ class FollowFragment : Fragment() {
     }
 
     private fun setUserListData(items: List<ItemsItem?>?) {
-        val listUsers = ArrayList<User>()
+        val listUsers = ArrayList<UserModel>()
         if (items != null) {
             for (item in items) {
                 val avatar = item?.avatarUrl ?: getString(R.string.default_avatar_url)
                 val username = item?.login ?: getString(R.string.default_username)
-                val user = User(avatar = avatar, username = username, null, null, null)
+                val user = UserModel(avatar = avatar, username = username, null, null, null)
                 listUsers.add(user)
             }
         }
 
-        val adapter = UserAdapter(listUsers)
+        val adapter = UserModelAdapter(listUsers)
         binding.rvUsers.adapter = adapter
-        adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: User) {
+        adapter.setOnItemClickCallback(object : UserModelAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: UserModel) {
                 val intent = Intent(activity, UserDetailActivity::class.java)
                 intent.putExtra(UserDetailActivity.EXTRA_USER, data)
                 startActivity(intent)

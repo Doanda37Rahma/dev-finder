@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder.api
+package com.dicoding.doanda.devfinder.network
 
 import retrofit2.Call
 import retrofit2.http.*
