@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserDetailViewModel: ViewModel() {
+class UserDetailViewModel(private val userName: String): ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -19,8 +19,11 @@ class UserDetailViewModel: ViewModel() {
     private val _userDetail = MutableLiveData<User>()
     val userDetail: LiveData<User> = _userDetail
 
-    fun findUserDetail(username: String?) {
-        val userName = username.toString()
+    init {
+        findUserDetail()
+    }
+
+    private fun findUserDetail() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getUserDetail(userName)
         client.enqueue(object : Callback<GithubUserResponse> {

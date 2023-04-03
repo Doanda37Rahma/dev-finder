@@ -32,15 +32,12 @@ class UserDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var userDetailViewModel: UserDetailViewModel
+    private lateinit var userDetailViewModelFactory: UserDetailViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        userDetailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-            .get(UserDetailViewModel::class.java)
-
 
         val user = if (Build.VERSION.SDK_INT >= 33) {
             intent.getParcelableExtra<User>(EXTRA_USER, User::class.java)
@@ -50,12 +47,16 @@ class UserDetailActivity : AppCompatActivity() {
         }
 
         if (user != null) {
-            userDetailViewModel.findUserDetail(user.username)
-            setFollowList(user.username)
+            val username = user.username ?: getString(R.string.default_username)
+
+            userDetailViewModelFactory = UserDetailViewModelFactory(username)
+            userDetailViewModel = ViewModelProvider(this, userDetailViewModelFactory)
+                .get(UserDetailViewModel::class.java)
         }
 
         userDetailViewModel.userDetail.observe(this) { userDetail ->
             setUserDetailData(userDetail)
+            setFollowList(userDetail.username)
         }
 
         userDetailViewModel.isLoading.observe(this) { isLoading ->
