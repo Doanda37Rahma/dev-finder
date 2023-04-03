@@ -2,24 +2,19 @@ package com.dicoding.doanda.devfinder
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.dicoding.doanda.devfinder.api.ApiConfig
-import com.dicoding.doanda.devfinder.api.GithubUserResponse
 import com.dicoding.doanda.devfinder.databinding.ActivityUserDetailBinding
 import com.dicoding.doanda.devfinder.user.User
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class UserDetailActivity : AppCompatActivity() {
@@ -36,11 +31,16 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityUserDetailBinding
+    private lateinit var userDetailViewModel: UserDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        userDetailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+            .get(UserDetailViewModel::class.java)
+
 
         val user = if (Build.VERSION.SDK_INT >= 33) {
             intent.getParcelableExtra<User>(EXTRA_USER, User::class.java)
@@ -50,28 +50,37 @@ class UserDetailActivity : AppCompatActivity() {
         }
 
         if (user != null) {
+            userDetailViewModel.findUserDetail(user.username)
+            setFollowList(user.username)
+        }
 
-            findUserDetail(user.name)
-            setFollowList(user.name)
+        userDetailViewModel.userDetail.observe(this) { userDetail ->
+            setUserDetailData(userDetail)
+        }
 
-
-//
-//            var requestOptions = RequestOptions()
-//            requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(50))
-//            Glide.with(this@UserDetailActivity)
-//                .load(user.avatar)
-//                .apply(requestOptions)
-//                .skipMemoryCache(true)
-//                .into(binding.imgUserDetailAvatar)
-//            binding.detailUsername.text = user.name
-
-
+        userDetailViewModel.isLoading.observe(this) { isLoading ->
+            showLoading(isLoading)
         }
     }
 
-    private fun setFollowList(name: String) {
+    private fun setUserDetailData(user: User) {
+        var requestOptions = RequestOptions()
+        requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(50))
+        Glide.with(this@UserDetailActivity)
+            .load(user.avatar)
+            .apply(requestOptions)
+            .skipMemoryCache(true)
+            .into(binding.imgUserDetailAvatar)
+        binding.detailName.text = user.name
+        binding.detailUsername.text = user.username
+        binding.detailFollowers.text = getString(R.string.followers, user.followerCount)
+        binding.detailFollowing.text = getString(R.string.following, user.followingCount)
+    }
+
+    private fun setFollowList(username: String?) {
+        val userName = username.toString()
         val sectionsPagerAdapter = SectionsPagerAdapter(this)
-        sectionsPagerAdapter.username = name
+        sectionsPagerAdapter.username = userName
         val viewPager: ViewPager2 = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
@@ -82,44 +91,6 @@ class UserDetailActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
     }
 
-    private fun findUserDetail(name: String) {
-        showLoading(true)
-        val username = name
-        val client = ApiConfig.getApiService().getUserDetail(username)
-        client.enqueue(object : Callback<GithubUserResponse> {
-            override fun onResponse(
-                call: Call<GithubUserResponse>,
-                response: Response<GithubUserResponse>
-            ) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-
-                        var requestOptions = RequestOptions()
-                        requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(50))
-                        Glide.with(this@UserDetailActivity)
-                            .load(responseBody.avatarUrl)
-                            .apply(requestOptions)
-                            .skipMemoryCache(true)
-                            .into(binding.imgUserDetailAvatar)
-                        binding.detailName.text = responseBody.name
-                        binding.detailUsername.text = responseBody.login
-                        binding.detailFollowers.text = getString(R.string.followers, responseBody.followers.toString())
-                        binding.detailFollowing.text = getString(R.string.following, responseBody.following.toString())
-                    }
-                } else {
-                    Log.e(TAG, "onResponseIsUnsuccessful: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<GithubUserResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailuer: ${t.message}")
-            }
-
-        })
-    }
 
     private fun showLoading(isLoading: Boolean) {
 

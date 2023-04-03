@@ -1,5 +1,6 @@
 package com.dicoding.doanda.devfinder
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -123,14 +124,21 @@ class FollowFragment : Fragment() {
         if (items != null) {
             for (item in items) {
                 val avatar = item?.avatarUrl ?: getString(R.string.default_avatar_url)
-                val name = item?.login ?: getString(R.string.default_username)
-                val user = User(avatar, name)
+                val username = item?.login ?: getString(R.string.default_username)
+                val user = User(avatar = avatar, username = username, null, null, null)
                 listUsers.add(user)
             }
         }
 
         val adapter = UserAdapter(listUsers)
         binding.rvUsers.adapter = adapter
+        adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: User) {
+                val intent = Intent(activity, UserDetailActivity::class.java)
+                intent.putExtra(UserDetailActivity.EXTRA_USER, data)
+                startActivity(intent)
+            }
+        })
     }
 
 }
