@@ -5,6 +5,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
-    val avatar: String,
-    val name: String,
+    var avatar: String?,
+    var username: String?,
+    var name: String?,
+    var followerCount: String?,
+    var followingCount: String?,
 ) : Parcelable

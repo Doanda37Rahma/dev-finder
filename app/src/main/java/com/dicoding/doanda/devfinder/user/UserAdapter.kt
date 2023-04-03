@@ -37,8 +37,7 @@ class UserAdapter(private val listUser: List<User>) :RecyclerView.Adapter<UserAd
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val (avatar, name) = listUser[position]
-//        holder.imgUserAvatar.setImageResource(avatar)
+        val (avatar, username) = listUser[position]
         var requestOptions = RequestOptions()
         requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(16))
         Glide.with(holder.itemView.context)
@@ -46,7 +45,7 @@ class UserAdapter(private val listUser: List<User>) :RecyclerView.Adapter<UserAd
             .apply(requestOptions)
             .skipMemoryCache(true)
             .into(holder.imgUserAvatar)
-        holder.tvUserName.text = name
+        holder.tvUserName.text = username
 
         holder.itemView.setOnClickListener {
             holder.itemView.setOnClickListener {

@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             for (item in items) {
                 val avatar = item?.avatarUrl ?: getString(R.string.default_avatar_url)
                 val name = item?.login ?: getString(R.string.default_username)
-                val user = User(avatar, name)
+                val user = User(avatar = avatar, username = name, null, null, null)
                 listUsers.add(user)
             }
         }
