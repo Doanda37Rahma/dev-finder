@@ -11,7 +11,12 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.doanda.devfinder.api.ApiConfig
+import com.dicoding.doanda.devfinder.api.GithubSearchResponse
+import com.dicoding.doanda.devfinder.api.ItemsItem
 import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
+import com.dicoding.doanda.devfinder.user.User
+import com.dicoding.doanda.devfinder.user.UserAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

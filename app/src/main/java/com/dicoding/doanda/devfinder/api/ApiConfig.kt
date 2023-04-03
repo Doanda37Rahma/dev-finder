@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder
+package com.dicoding.doanda.devfinder.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

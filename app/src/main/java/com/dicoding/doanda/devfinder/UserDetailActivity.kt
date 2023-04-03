@@ -11,7 +11,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.dicoding.doanda.devfinder.api.ApiConfig
+import com.dicoding.doanda.devfinder.api.GithubUserResponse
 import com.dicoding.doanda.devfinder.databinding.ActivityUserDetailBinding
+import com.dicoding.doanda.devfinder.user.User
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import retrofit2.Call

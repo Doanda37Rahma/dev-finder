@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder
+package com.dicoding.doanda.devfinder.api
 
 import com.google.gson.annotations.SerializedName
 
