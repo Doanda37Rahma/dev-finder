@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.dicoding.doanda.devfinder.activities.UserDetailActivity
 import com.dicoding.doanda.devfinder.network.ApiConfig
 import com.dicoding.doanda.devfinder.network.GithubUserResponse
-import com.dicoding.doanda.devfinder.user.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

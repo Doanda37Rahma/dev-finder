@@ -14,8 +14,8 @@ import com.dicoding.doanda.devfinder.activities.UserDetailActivity
 import com.dicoding.doanda.devfinder.databinding.FragmentFollowBinding
 import com.dicoding.doanda.devfinder.network.ApiConfig
 import com.dicoding.doanda.devfinder.network.ItemsItem
-import com.dicoding.doanda.devfinder.user.UserModel
-import com.dicoding.doanda.devfinder.user.UserModelAdapter
+import com.dicoding.doanda.devfinder.models.UserModel
+import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

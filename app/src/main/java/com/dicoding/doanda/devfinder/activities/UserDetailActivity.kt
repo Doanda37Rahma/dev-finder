@@ -16,7 +16,7 @@ import com.dicoding.doanda.devfinder.adapters.SectionsPagerAdapter
 import com.dicoding.doanda.devfinder.databinding.ActivityUserDetailBinding
 import com.dicoding.doanda.devfinder.models.UserDetailViewModel
 import com.dicoding.doanda.devfinder.models.UserDetailViewModelFactory
-import com.dicoding.doanda.devfinder.user.UserModel
+import com.dicoding.doanda.devfinder.models.UserModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

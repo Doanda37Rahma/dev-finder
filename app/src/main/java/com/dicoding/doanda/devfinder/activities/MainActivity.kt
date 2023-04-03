@@ -15,8 +15,8 @@ import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.network.ItemsItem
 import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
 import com.dicoding.doanda.devfinder.models.MainViewModel
-import com.dicoding.doanda.devfinder.user.UserModel
-import com.dicoding.doanda.devfinder.user.UserModelAdapter
+import com.dicoding.doanda.devfinder.models.UserModel
+import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 
 class MainActivity : AppCompatActivity() {
 

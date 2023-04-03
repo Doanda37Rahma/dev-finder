@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder.user
+package com.dicoding.doanda.devfinder.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.doanda.devfinder.R
+import com.dicoding.doanda.devfinder.models.UserModel
 
 class UserModelAdapter(private val listUser: List<UserModel>) :RecyclerView.Adapter<UserModelAdapter.ViewHolder>() {
 

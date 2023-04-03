@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder.user
+package com.dicoding.doanda.devfinder.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
