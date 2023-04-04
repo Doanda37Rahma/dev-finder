@@ -103,7 +103,7 @@
         android:layout_marginTop="16dp"
         android:contentDescription="@string/content_description"
         android:background="?attr/colorPrimary"
-        app:tabTextColor="@android:color/white" />
+        app:tabTextColor="?attr/colorOnPrimary" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
