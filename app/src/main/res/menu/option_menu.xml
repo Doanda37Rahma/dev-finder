@@ -3,11 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings_white_24"
+        android:title="@string/settings"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_favorite_full_24"
+        android:title="@string/favorites"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/search"
         android:icon="@drawable/ic_search_white_24px"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|always"
+        app:showAsAction="collapseActionView|ifRoom"
         />
 
 
