@@ -3,26 +3,36 @@ package com.dicoding.doanda.devfinder.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 import com.dicoding.doanda.devfinder.database.FavoriteUser
 import com.dicoding.doanda.devfinder.databinding.ActivityFavoriteBinding
 import com.dicoding.doanda.devfinder.models.FavoriteViewModel
+import com.dicoding.doanda.devfinder.models.FavoriteViewModelFactory
 import com.dicoding.doanda.devfinder.models.UserDetail
 
 class FavoriteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoriteBinding
     private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var favoriteViewModelFactory: FavoriteViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        favoriteViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+        supportActionBar?.title = getString(R.string.favorites)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        favoriteViewModelFactory = FavoriteViewModelFactory(application)
+        favoriteViewModel = ViewModelProvider(this, favoriteViewModelFactory)
             .get(FavoriteViewModel::class.java)
 
         val layoutManager = LinearLayoutManager(this)
@@ -36,6 +46,16 @@ class FavoriteActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setUserListData(favoriteUsers: List<FavoriteUser>) {

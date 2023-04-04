@@ -2,6 +2,7 @@ package com.dicoding.doanda.devfinder.activities
 
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -49,6 +50,10 @@ class UserDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.title = getString(R.string.user_detail)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val user = if (Build.VERSION.SDK_INT >= 33) {
             intent.getParcelableExtra(EXTRA_USER, UserDetail::class.java)
@@ -100,6 +105,16 @@ class UserDetailActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setFabView(isFavorited: Boolean?) {
