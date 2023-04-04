@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +16,7 @@ import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.network.ItemsItem
 import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
 import com.dicoding.doanda.devfinder.models.MainViewModel
-import com.dicoding.doanda.devfinder.models.UserModel
+import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -44,7 +45,20 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.isLoading.observe(this) { isLoading ->
             showLoading(isLoading)
         }
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favorites -> {
+                startActivity(Intent(this@MainActivity, FavoriteActivity::class.java))
+                return true
+            }
+            R.id.settings -> {
+                startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+                return true
+            }
+            else -> return true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -82,12 +96,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUserListData(items: List<ItemsItem?>?) {
-        val listUsers = ArrayList<UserModel>()
+        val listUsers = ArrayList<UserDetail>()
         if (items != null) {
             for (item in items) {
                 val avatar = item?.avatarUrl ?: getString(R.string.default_avatar_url)
                 val name = item?.login ?: getString(R.string.default_username)
-                val user = UserModel(avatar = avatar, username = name, null, null, null)
+                val user = UserDetail(avatar = avatar, username = name, null, null, null)
                 listUsers.add(user)
             }
         }
@@ -95,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = UserModelAdapter(listUsers)
         binding.rvUsers.adapter = adapter
         adapter.setOnItemClickCallback(object : UserModelAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: UserModel) {
+            override fun onItemClicked(data: UserDetail) {
                 val intent = Intent(this@MainActivity, UserDetailActivity::class.java)
                 intent.putExtra(UserDetailActivity.EXTRA_USER, data)
                 startActivity(intent)
