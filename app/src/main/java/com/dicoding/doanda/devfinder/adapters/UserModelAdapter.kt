@@ -11,14 +11,14 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.doanda.devfinder.R
-import com.dicoding.doanda.devfinder.models.UserModel
+import com.dicoding.doanda.devfinder.models.UserDetail
 
-class UserModelAdapter(private val listUser: List<UserModel>) :RecyclerView.Adapter<UserModelAdapter.ViewHolder>() {
+class UserModelAdapter(private val listUser: List<UserDetail>) :RecyclerView.Adapter<UserModelAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: UserModel)
+        fun onItemClicked(data: UserDetail)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

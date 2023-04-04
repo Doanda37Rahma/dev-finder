@@ -1,23 +1,31 @@
 package com.dicoding.doanda.devfinder.models
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dicoding.doanda.devfinder.activities.UserDetailActivity
+import com.dicoding.doanda.devfinder.database.FavoriteUser
 import com.dicoding.doanda.devfinder.network.ApiConfig
 import com.dicoding.doanda.devfinder.network.GithubUserResponse
+import com.dicoding.doanda.devfinder.repository.FavoriteUserRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserDetailViewModel(private val userName: String): ViewModel() {
+class UserDetailViewModel(application: Application, private val userName: String): ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _userDetail = MutableLiveData<UserModel>()
-    val userDetail: LiveData<UserModel> = _userDetail
+    private val _userDetail = MutableLiveData<UserDetail>()
+    val userDetail: LiveData<UserDetail> = _userDetail
+
+    fun getFavoriteUserByUsername(username: String): LiveData<FavoriteUser> =
+        mFavoriteUserRepository.getFavoriteUserByUsername(username)
+
+    private val mFavoriteUserRepository: FavoriteUserRepository = FavoriteUserRepository(application)
 
     init {
         findUserDetail()
@@ -36,7 +44,7 @@ class UserDetailViewModel(private val userName: String): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
 
-                        val user = UserModel(
+                        val user = UserDetail(
                             avatar = responseBody.avatarUrl,
                             username = responseBody.login,
                             name = responseBody.name,
@@ -58,6 +66,11 @@ class UserDetailViewModel(private val userName: String): ViewModel() {
         })
     }
 
+    fun insert(favoriteUser: FavoriteUser) {
+        mFavoriteUserRepository.insert(favoriteUser)
+    }
 
-
+    fun delete(favoriteUser: FavoriteUser) {
+        mFavoriteUserRepository.delete(favoriteUser)
+    }
 }

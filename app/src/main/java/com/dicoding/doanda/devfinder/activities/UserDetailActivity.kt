@@ -3,6 +3,7 @@ package com.dicoding.doanda.devfinder.activities
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -13,10 +14,11 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.adapters.SectionsPagerAdapter
+import com.dicoding.doanda.devfinder.database.FavoriteUser
 import com.dicoding.doanda.devfinder.databinding.ActivityUserDetailBinding
 import com.dicoding.doanda.devfinder.models.UserDetailViewModel
 import com.dicoding.doanda.devfinder.models.UserDetailViewModelFactory
-import com.dicoding.doanda.devfinder.models.UserModel
+import com.dicoding.doanda.devfinder.models.UserDetail
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -34,6 +36,11 @@ class UserDetailActivity : AppCompatActivity() {
         )
     }
 
+    private var username : String? = null
+    private var avatar : String? = null
+    private var isFavorited = false
+    private var favoriteUser = FavoriteUser()
+
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var userDetailViewModel: UserDetailViewModel
     private lateinit var userDetailViewModelFactory: UserDetailViewModelFactory
@@ -44,18 +51,29 @@ class UserDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val user = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra<UserModel>(EXTRA_USER, UserModel::class.java)
+            intent.getParcelableExtra(EXTRA_USER, UserDetail::class.java)
         } else {
             @Suppress("DEPRECATION")
-            intent.getParcelableExtra<UserModel>(EXTRA_USER)
+            intent.getParcelableExtra(EXTRA_USER)
         }
 
         if (user != null) {
-            val username = user.username ?: getString(R.string.default_username)
+            username = user.username ?: getString(R.string.default_username)
+            avatar = user.avatar ?: getString(R.string.default_avatar_url)
 
-            userDetailViewModelFactory = UserDetailViewModelFactory(username)
+            userDetailViewModelFactory = UserDetailViewModelFactory(application, username as String)
             userDetailViewModel = ViewModelProvider(this, userDetailViewModelFactory)
                 .get(UserDetailViewModel::class.java)
+
+            userDetailViewModel.getFavoriteUserByUsername(username as String).observe(this) { favoriteUser ->
+                if (favoriteUser != null) {
+                    isFavorited = true
+                    this.favoriteUser = favoriteUser
+                } else {
+                    isFavorited = false
+                }
+                setFabView(isFavorited)
+            }
         }
 
         userDetailViewModel.userDetail.observe(this) { userDetail ->
@@ -66,9 +84,33 @@ class UserDetailActivity : AppCompatActivity() {
         userDetailViewModel.isLoading.observe(this) { isLoading ->
             showLoading(isLoading)
         }
+
+        binding.fabFavorite.setOnClickListener { view ->
+            if (view.id == R.id.fab_favorite) {
+                if (isFavorited) {
+                    userDetailViewModel.delete(favoriteUser)
+                    Toast.makeText(this@UserDetailActivity, "$username deleted from favorites!", Toast.LENGTH_SHORT).show()
+                } else {
+                    favoriteUser = FavoriteUser(avatar = avatar, username = username as String)
+                    userDetailViewModel.insert(favoriteUser)
+                    Toast.makeText(this@UserDetailActivity, "$username added to favorites!", Toast.LENGTH_SHORT).show()
+
+                }
+
+            }
+        }
+
     }
 
-    private fun setUserDetailData(user: UserModel) {
+    private fun setFabView(isFavorited: Boolean?) {
+        if (isFavorited == true) {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_full_24)
+        } else {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_border_24)
+        }
+    }
+
+    private fun setUserDetailData(user: UserDetail) {
         var requestOptions = RequestOptions()
         requestOptions = requestOptions.transform(FitCenter(), RoundedCorners(50))
         Glide.with(this@UserDetailActivity)
