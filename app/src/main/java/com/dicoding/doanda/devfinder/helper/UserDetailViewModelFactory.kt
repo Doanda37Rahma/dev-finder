@@ -1,4 +1,4 @@
-package com.dicoding.doanda.devfinder.models
+package com.dicoding.doanda.devfinder.helper
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

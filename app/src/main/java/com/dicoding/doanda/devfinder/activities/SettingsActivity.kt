@@ -14,7 +14,7 @@ import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.databinding.ActivitySettingsBinding
 import com.dicoding.doanda.devfinder.helper.SettingsPreferences
 import com.dicoding.doanda.devfinder.models.SettingsViewModel
-import com.dicoding.doanda.devfinder.models.SettingsViewModelFactory
+import com.dicoding.doanda.devfinder.helper.SettingsViewModelFactory
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 

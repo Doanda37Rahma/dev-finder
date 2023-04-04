@@ -1,8 +1,8 @@
-package com.dicoding.doanda.devfinder.models
+package com.dicoding.doanda.devfinder.helper
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.doanda.devfinder.helper.SettingsPreferences
+import com.dicoding.doanda.devfinder.models.MainViewModel
 
 class MainViewModelFactory(private val pref: SettingsPreferences) :
     ViewModelProvider.NewInstanceFactory() {

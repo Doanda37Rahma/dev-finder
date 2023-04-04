@@ -19,7 +19,7 @@ import com.dicoding.doanda.devfinder.database.FavoriteUser
 import com.dicoding.doanda.devfinder.databinding.ActivityUserDetailBinding
 import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.models.UserDetailViewModel
-import com.dicoding.doanda.devfinder.models.UserDetailViewModelFactory
+import com.dicoding.doanda.devfinder.helper.UserDetailViewModelFactory
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

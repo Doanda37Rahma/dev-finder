@@ -12,7 +12,7 @@ import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 import com.dicoding.doanda.devfinder.database.FavoriteUser
 import com.dicoding.doanda.devfinder.databinding.ActivityFavoriteBinding
 import com.dicoding.doanda.devfinder.models.FavoriteViewModel
-import com.dicoding.doanda.devfinder.models.FavoriteViewModelFactory
+import com.dicoding.doanda.devfinder.helper.FavoriteViewModelFactory
 import com.dicoding.doanda.devfinder.models.UserDetail
 
 class FavoriteActivity : AppCompatActivity() {

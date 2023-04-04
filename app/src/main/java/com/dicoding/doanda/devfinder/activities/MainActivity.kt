@@ -21,7 +21,7 @@ import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
 import com.dicoding.doanda.devfinder.helper.SettingsPreferences
 import com.dicoding.doanda.devfinder.models.MainViewModel
-import com.dicoding.doanda.devfinder.models.MainViewModelFactory
+import com.dicoding.doanda.devfinder.helper.MainViewModelFactory
 import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.network.ItemsItem
 
