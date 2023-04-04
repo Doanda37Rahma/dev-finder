@@ -14,7 +14,7 @@ import com.dicoding.doanda.devfinder.activities.UserDetailActivity
 import com.dicoding.doanda.devfinder.databinding.FragmentFollowBinding
 import com.dicoding.doanda.devfinder.network.ApiConfig
 import com.dicoding.doanda.devfinder.network.ItemsItem
-import com.dicoding.doanda.devfinder.models.UserModel
+import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -121,12 +121,12 @@ class FollowFragment : Fragment() {
     }
 
     private fun setUserListData(items: List<ItemsItem?>?) {
-        val listUsers = ArrayList<UserModel>()
+        val listUsers = ArrayList<UserDetail>()
         if (items != null) {
             for (item in items) {
                 val avatar = item?.avatarUrl ?: getString(R.string.default_avatar_url)
                 val username = item?.login ?: getString(R.string.default_username)
-                val user = UserModel(avatar = avatar, username = username, null, null, null)
+                val user = UserDetail(avatar = avatar, username = username, null, null, null)
                 listUsers.add(user)
             }
         }
@@ -134,7 +134,7 @@ class FollowFragment : Fragment() {
         val adapter = UserModelAdapter(listUsers)
         binding.rvUsers.adapter = adapter
         adapter.setOnItemClickCallback(object : UserModelAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: UserModel) {
+            override fun onItemClicked(data: UserDetail) {
                 val intent = Intent(activity, UserDetailActivity::class.java)
                 intent.putExtra(UserDetailActivity.EXTRA_USER, data)
                 startActivity(intent)
