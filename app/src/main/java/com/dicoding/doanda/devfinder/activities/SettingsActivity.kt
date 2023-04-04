@@ -40,11 +40,9 @@ class SettingsActivity : AppCompatActivity() {
 
         settingsViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {
-                Toast.makeText(this@SettingsActivity, "observed isDarkModeActive true", Toast.LENGTH_SHORT).show()
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 binding.swDarkmode.isChecked = true
             } else {
-                Toast.makeText(this@SettingsActivity, "observed isDarkModeActive false", Toast.LENGTH_SHORT).show()
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 binding.swDarkmode.isChecked = false
             }

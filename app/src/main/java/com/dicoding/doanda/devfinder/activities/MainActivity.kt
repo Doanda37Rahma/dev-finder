@@ -8,7 +8,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +22,10 @@ import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
 import com.dicoding.doanda.devfinder.models.MainViewModel
 import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
+import com.dicoding.doanda.devfinder.helper.SettingsPreferences
+import com.dicoding.doanda.devfinder.models.MainViewModelFactory
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,8 +38,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+        val pref = SettingsPreferences.getInstance(dataStore)
+        mainViewModel = ViewModelProvider(this, MainViewModelFactory(pref))
             .get(MainViewModel::class.java)
+
+        mainViewModel.getThemeSettings().observe(this) { isDarkModeActive ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvUsers.layoutManager = layoutManager
@@ -45,6 +62,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.isLoading.observe(this) { isLoading ->
             showLoading(isLoading)
         }
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
