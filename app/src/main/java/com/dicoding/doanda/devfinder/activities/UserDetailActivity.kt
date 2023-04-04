@@ -17,9 +17,9 @@ import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.adapters.SectionsPagerAdapter
 import com.dicoding.doanda.devfinder.database.FavoriteUser
 import com.dicoding.doanda.devfinder.databinding.ActivityUserDetailBinding
+import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.models.UserDetailViewModel
 import com.dicoding.doanda.devfinder.models.UserDetailViewModelFactory
-import com.dicoding.doanda.devfinder.models.UserDetail
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -37,8 +37,8 @@ class UserDetailActivity : AppCompatActivity() {
         )
     }
 
-    private var username : String? = null
-    private var avatar : String? = null
+    private var username: String? = null
+    private var avatar: String? = null
     private var isFavorited = false
     private var favoriteUser = FavoriteUser()
 
@@ -70,15 +70,16 @@ class UserDetailActivity : AppCompatActivity() {
             userDetailViewModel = ViewModelProvider(this, userDetailViewModelFactory)
                 .get(UserDetailViewModel::class.java)
 
-            userDetailViewModel.getFavoriteUserByUsername(username as String).observe(this) { favoriteUser ->
-                if (favoriteUser != null) {
-                    isFavorited = true
-                    this.favoriteUser = favoriteUser
-                } else {
-                    isFavorited = false
+            userDetailViewModel.getFavoriteUserByUsername(username as String)
+                .observe(this) { favoriteUser ->
+                    if (favoriteUser != null) {
+                        isFavorited = true
+                        this.favoriteUser = favoriteUser
+                    } else {
+                        isFavorited = false
+                    }
+                    setFabView(isFavorited)
                 }
-                setFabView(isFavorited)
-            }
         }
 
         userDetailViewModel.userDetail.observe(this) { userDetail ->
@@ -94,11 +95,19 @@ class UserDetailActivity : AppCompatActivity() {
             if (view.id == R.id.fab_favorite) {
                 if (isFavorited) {
                     userDetailViewModel.delete(favoriteUser)
-                    Toast.makeText(this@UserDetailActivity, "$username deleted from favorites!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@UserDetailActivity,
+                        "$username deleted from favorites!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     favoriteUser = FavoriteUser(avatar = avatar, username = username as String)
                     userDetailViewModel.insert(favoriteUser)
-                    Toast.makeText(this@UserDetailActivity, "$username added to favorites!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@UserDetailActivity,
+                        "$username added to favorites!",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 }
 

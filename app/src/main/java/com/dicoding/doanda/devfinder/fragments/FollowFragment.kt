@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.activities.UserDetailActivity
+import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 import com.dicoding.doanda.devfinder.databinding.FragmentFollowBinding
+import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.network.ApiConfig
 import com.dicoding.doanda.devfinder.network.ItemsItem
-import com.dicoding.doanda.devfinder.models.UserDetail
-import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -109,7 +109,8 @@ class FollowFragment : Fragment() {
                 showLoading(false)
                 Log.e(TAG, "onFailure: ${t.message}")
             }
-        })    }
+        })
+    }
 
     private fun showLoading(isLoading: Boolean) {
 

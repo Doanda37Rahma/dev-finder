@@ -13,7 +13,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.dicoding.doanda.devfinder.R
 import com.dicoding.doanda.devfinder.models.UserDetail
 
-class UserModelAdapter(private val listUser: List<UserDetail>) :RecyclerView.Adapter<UserModelAdapter.ViewHolder>() {
+class UserModelAdapter(private val listUser: List<UserDetail>) :
+    RecyclerView.Adapter<UserModelAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -24,13 +25,16 @@ class UserModelAdapter(private val listUser: List<UserDetail>) :RecyclerView.Ada
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvUserName: TextView = view.findViewById(R.id.tv_user_name)
         val imgUserAvatar: ImageView = view.findViewById(R.id.img_user_avatar)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {

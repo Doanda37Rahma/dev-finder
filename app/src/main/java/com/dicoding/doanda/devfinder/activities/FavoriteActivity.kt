@@ -1,9 +1,9 @@
 package com.dicoding.doanda.devfinder.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,7 +63,7 @@ class FavoriteActivity : AppCompatActivity() {
         for (favoriteUser in favoriteUsers) {
             val avatar = favoriteUser.avatar
             val username = favoriteUser.username
-            val user = UserDetail(avatar = avatar, username = username, null, null , null)
+            val user = UserDetail(avatar = avatar, username = username, null, null, null)
             listUsers.add(user)
         }
 

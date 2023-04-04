@@ -3,11 +3,11 @@ package com.dicoding.doanda.devfinder.activities
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.datastore.core.DataStore
@@ -17,13 +17,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.doanda.devfinder.R
-import com.dicoding.doanda.devfinder.network.ItemsItem
-import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
-import com.dicoding.doanda.devfinder.models.MainViewModel
-import com.dicoding.doanda.devfinder.models.UserDetail
 import com.dicoding.doanda.devfinder.adapters.UserModelAdapter
+import com.dicoding.doanda.devfinder.databinding.ActivityMainBinding
 import com.dicoding.doanda.devfinder.helper.SettingsPreferences
+import com.dicoding.doanda.devfinder.models.MainViewModel
 import com.dicoding.doanda.devfinder.models.MainViewModelFactory
+import com.dicoding.doanda.devfinder.models.UserDetail
+import com.dicoding.doanda.devfinder.network.ItemsItem
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 

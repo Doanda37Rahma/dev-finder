@@ -1,11 +1,10 @@
 package com.dicoding.doanda.devfinder.activities
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.CompoundButton
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -18,6 +17,7 @@ import com.dicoding.doanda.devfinder.models.SettingsViewModel
 import com.dicoding.doanda.devfinder.models.SettingsViewModelFactory
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
@@ -49,7 +49,6 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.swDarkmode.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            Toast.makeText(this@SettingsActivity, "setOnChecked", Toast.LENGTH_SHORT).show()
             settingsViewModel.saveThemeSetting(isChecked)
         }
 

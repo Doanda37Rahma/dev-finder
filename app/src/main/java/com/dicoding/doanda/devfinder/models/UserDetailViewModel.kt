@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserDetailViewModel(application: Application, private val userName: String): ViewModel() {
+class UserDetailViewModel(application: Application, private val userName: String) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -25,7 +25,8 @@ class UserDetailViewModel(application: Application, private val userName: String
     fun getFavoriteUserByUsername(username: String): LiveData<FavoriteUser> =
         mFavoriteUserRepository.getFavoriteUserByUsername(username)
 
-    private val mFavoriteUserRepository: FavoriteUserRepository = FavoriteUserRepository(application)
+    private val mFavoriteUserRepository: FavoriteUserRepository =
+        FavoriteUserRepository(application)
 
     init {
         findUserDetail()

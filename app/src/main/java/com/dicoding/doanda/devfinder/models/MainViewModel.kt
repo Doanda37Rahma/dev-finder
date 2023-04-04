@@ -37,13 +37,13 @@ class MainViewModel(private val pref: SettingsPreferences) : ViewModel() {
         _isLoading.value = true
         val userQuery = query ?: ""
         val client = ApiConfig.getApiService().searchUsers(userQuery)
-        client.enqueue(object: Callback<GithubSearchResponse> {
+        client.enqueue(object : Callback<GithubSearchResponse> {
             override fun onResponse(
                 call: Call<GithubSearchResponse>,
                 response: Response<GithubSearchResponse>
             ) {
                 _isLoading.value = false
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _listUser.value = responseBody.items
@@ -60,8 +60,6 @@ class MainViewModel(private val pref: SettingsPreferences) : ViewModel() {
         })
 
     }
-
-
 
 
 }
